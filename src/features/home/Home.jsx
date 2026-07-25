@@ -12,18 +12,19 @@ import {
   Boxes,
   Smartphone,
   Sparkles,
+  Zap,
 } from 'lucide-react';
 import AuroraBackground from '@platform/components/animations/AuroraBackground.jsx';
 import GlassCard from '@platform/components/ui/GlassCard.jsx';
 import Button from '@platform/components/ui/Button.jsx';
 import { Eyebrow, Badge } from '@platform/components/ui/Badge.jsx';
-import AnimatedCounter from '@platform/components/animations/AnimatedCounter.jsx';
 
-const stats = [
-  { label: 'Students on Orbit', value: 10000, suffix: '+' },
-  { label: 'Partner Departments', value: 50, suffix: '+' },
-  { label: 'Platform Uptime', value: 99.9, suffix: '%', decimals: 1 },
-  { label: 'Avg. Satisfaction', value: 4.8, suffix: '/5', decimals: 1 },
+// Real, verifiable facts about the product itself — no invented usage numbers.
+const highlights = [
+  { icon: Boxes, label: '4 Core Modules' },
+  { icon: LayoutGrid, label: 'Customizable Dashboard' },
+  { icon: Sparkles, label: 'Micro-Frontend Ready' },
+  { icon: Zap, label: 'SPA Experience' },
 ];
 
 const features = [
@@ -130,17 +131,15 @@ export default function Home() {
           </motion.div>
 
           <div className="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {stats.map((s, i) => (
+            {highlights.map((h, i) => (
               <motion.div
-                key={s.label}
+                key={h.label}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 + i * 0.08 }}
               >
-                <p className="number-mono font-display text-2xl font-semibold text-haze-100 sm:text-3xl">
-                  <AnimatedCounter value={s.value} suffix={s.suffix} decimals={s.decimals || 0} />
-                </p>
-                <p className="mt-1 text-xs text-haze-400">{s.label}</p>
+                <h.icon size={18} className="text-orbit-violetSoft" />
+                <p className="mt-2 font-display text-sm font-semibold text-haze-100 sm:text-base">{h.label}</p>
               </motion.div>
             ))}
           </div>

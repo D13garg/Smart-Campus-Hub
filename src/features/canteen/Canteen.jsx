@@ -65,7 +65,7 @@ export default function Canteen() {
                 key={c}
                 onClick={() => setActiveCategory(c)}
                 className={`rounded-full px-4 py-2 text-xs font-medium transition-colors ${
-                  activeCategory === c ? 'bg-orbit-amber text-ink-950' : 'glass text-haze-300 hover:text-haze-100'
+                  activeCategory === c ? 'bg-orbit-amber text-[#0B0C14]' : 'glass text-haze-300 hover:text-haze-100'
                 }`}
               >
                 {c}
@@ -95,7 +95,7 @@ export default function Canteen() {
                           <Minus size={12} />
                         </button>
                         <span className="number-mono w-4 text-center text-sm text-haze-100">{cart[item.id]}</span>
-                        <button onClick={() => add(item.id)} className="flex h-7 w-7 items-center justify-center rounded-full bg-orbit-amber text-ink-950">
+                        <button onClick={() => add(item.id)} className="flex h-7 w-7 items-center justify-center rounded-full bg-orbit-amber text-[#0B0C14]">
                           <Plus size={12} />
                         </button>
                       </div>

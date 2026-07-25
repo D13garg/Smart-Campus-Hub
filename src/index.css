@@ -2,9 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Dark theme (default) — surfaces run darkest to less-dark */
+  --ink-950: #07080F;
+  --ink-900: #0A0B14;
+  --ink-850: #0E1019;
+  --ink-800: #12141F;
+  --ink-700: #191C29;
+  --ink-600: #242739;
+
+  /* Dark theme text — dim to bright */
+  --haze-400: #9296AC;
+  --haze-300: #B7BACB;
+  --haze-200: #CDD0DE;
+  --haze-100: #F4F5FA;
+
+  --canvas-track: rgba(255, 255, 255, 0.08);
+  --hairline: rgba(255, 255, 255, 1);
+  --scroll-thumb: #242739;
+  --scroll-thumb-hover: #7c6cf6;
+  --selection-bg: rgba(124, 108, 246, 0.35);
+  --selection-fg: #fff;
+  --glow-shadow: 0 0 40px -8px rgba(124, 108, 246, 0.45);
+  --card-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.5);
+  --glass-grad-a: rgba(255, 255, 255, 0.055);
+  --glass-grad-b: rgba(255, 255, 255, 0.02);
+  --glass-strong-grad-a: rgba(18, 20, 31, 0.92);
+  --glass-strong-grad-b: rgba(10, 11, 20, 0.96);
+}
+
+/* Light theme — "noble" grey-white. Same structural roles, inverted values. */
+html.light-mode {
+  --ink-950: #ffffff;
+  --ink-900: #f4f5f9;
+  --ink-850: #edeef4;
+  --ink-800: #e4e7ef;
+  --ink-700: #d7dae4;
+  --ink-600: #c7ccd9;
+
+  --haze-400: #6b7086;
+  --haze-300: #4c5066;
+  --haze-200: #35384a;
+  --haze-100: #12131c;
+
+  --canvas-track: rgba(18, 19, 28, 0.08);
+  --hairline: rgba(18, 19, 28, 1);
+  --scroll-thumb: #c7ccd9;
+  --scroll-thumb-hover: #7c6cf6;
+  --selection-bg: rgba(124, 108, 246, 0.18);
+  --selection-fg: #12131c;
+  --glow-shadow: 0 0 32px -10px rgba(124, 108, 246, 0.3);
+  --card-shadow: 0 8px 30px -14px rgba(30, 32, 51, 0.16);
+  --glass-grad-a: rgba(255, 255, 255, 0.75);
+  --glass-grad-b: rgba(255, 255, 255, 0.45);
+  --glass-strong-grad-a: rgba(255, 255, 255, 0.94);
+  --glass-strong-grad-b: rgba(244, 245, 249, 0.98);
+}
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: #242739 transparent;
+  scrollbar-color: var(--scroll-thumb) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -12,25 +69,30 @@
   height: 8px;
 }
 *::-webkit-scrollbar-thumb {
-  background: #242739;
+  background: var(--scroll-thumb);
   border-radius: 8px;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: #7c6cf6;
+  background: var(--scroll-thumb-hover);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+html.light-mode {
+  color-scheme: light;
+}
+
 body {
   @apply bg-ink-900 text-haze-100 font-body antialiased;
   background-image: bg-grain;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background: rgba(124, 108, 246, 0.35);
-  color: #fff;
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 :focus-visible {
@@ -51,17 +113,27 @@ body {
 }
 
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, var(--glass-grad-a), var(--glass-grad-b));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-strong {
-  background: linear-gradient(180deg, rgba(18, 20, 31, 0.92), rgba(10, 11, 20, 0.96));
+  background: linear-gradient(180deg, var(--glass-strong-grad-a), var(--glass-strong-grad-b));
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+html.light-mode .glass {
+  border: 1px solid rgba(18, 19, 28, 0.08);
+  box-shadow: 0 1px 2px rgba(30, 32, 51, 0.04);
+}
+
+html.light-mode .glass-strong {
+  border: 1px solid rgba(18, 19, 28, 0.08);
+  box-shadow: 0 4px 20px rgba(30, 32, 51, 0.06);
 }
 
 .text-gradient {
@@ -80,7 +152,64 @@ body {
   mix-blend-mode: overlay;
 }
 
+html.light-mode .noise-overlay {
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
 .number-mono {
   font-family: 'JetBrains Mono', monospace;
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------------------------------------------------------------------- *
+ * Light-mode overrides for the "on white" utility classes.
+ * The dark theme leans on translucent white (borders, chips, hairlines)
+ * layered over near-black surfaces. In light mode those same utilities
+ * need to sit on top of grey-white surfaces instead, so we recolor them
+ * with a soft ink tint at an equivalent visual weight — every component
+ * that used bg-white/x, border-white/x or text-white keeps working
+ * without needing per-file edits.
+ * ---------------------------------------------------------------------- */
+html.light-mode {
+  --line: 18, 19, 28;
+}
+
+html.light-mode .border-white\/6 { border-color: rgba(var(--line), 0.06); }
+html.light-mode .border-white\/8 { border-color: rgba(var(--line), 0.08); }
+html.light-mode .border-white\/10 { border-color: rgba(var(--line), 0.09); }
+html.light-mode .border-white\/12 { border-color: rgba(var(--line), 0.1); }
+html.light-mode .border-white\/15 { border-color: rgba(var(--line), 0.12); }
+html.light-mode .border-white\/20 { border-color: rgba(var(--line), 0.14); }
+html.light-mode .divide-white\/8 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(var(--line), 0.08); }
+
+html.light-mode .bg-white\/5 { background-color: rgba(var(--line), 0.035); }
+html.light-mode .bg-white\/6 { background-color: rgba(var(--line), 0.045); }
+html.light-mode .bg-white\/8 { background-color: rgba(var(--line), 0.055); }
+html.light-mode .bg-white\/10 { background-color: rgba(var(--line), 0.07); }
+html.light-mode .bg-white\/40 { background-color: rgba(var(--line), 0.28); }
+html.light-mode .bg-white\/\[0\.02\] { background-color: rgba(var(--line), 0.02); }
+html.light-mode .bg-white\/\[0\.03\] { background-color: rgba(var(--line), 0.03); }
+
+html.light-mode .hover\:bg-white\/10:hover { background-color: rgba(var(--line), 0.07); }
+html.light-mode .hover\:border-white\/20:hover { border-color: rgba(var(--line), 0.16); }
+
+html.light-mode .bg-white { background-color: #ffffff; }
+html.light-mode .text-white { color: #14151f; }
+
+/* Ambient background: soften the aurora blooms and particles so the
+   canvas reads as warm grey-white rather than a washed-out dark mesh. */
+html.light-mode .bg-aurora-mesh {
+  background:
+    radial-gradient(45% 45% at 20% 20%, rgba(124, 108, 246, 0.14) 0%, transparent 60%),
+    radial-gradient(40% 40% at 85% 15%, rgba(45, 216, 196, 0.12) 0%, transparent 60%),
+    radial-gradient(50% 50% at 50% 100%, rgba(233, 162, 45, 0.08) 0%, transparent 60%);
+}
+
+html.light-mode .bg-white\/40.rounded-full {
+  background-color: rgba(124, 108, 246, 0.35);
+}
+
+html.light-mode .blur-3xl.opacity-30 { opacity: 0.16; }
+html.light-mode .blur-3xl.opacity-20 { opacity: 0.12; }
+html.light-mode .bg-aurora-mesh.opacity-90 { opacity: 0.7; }

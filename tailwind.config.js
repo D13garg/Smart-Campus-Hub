@@ -5,17 +5,21 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#07080F',
-          900: '#0A0B14',
-          850: '#0E1019',
-          800: '#12141F',
-          700: '#191C29',
-          600: '#242739',
+          950: 'var(--ink-950)',
+          900: 'var(--ink-900)',
+          850: 'var(--ink-850)',
+          800: 'var(--ink-800)',
+          700: 'var(--ink-700)',
+          600: 'var(--ink-600)',
         },
         haze: {
-          400: '#9296AC',
-          300: '#B7BACB',
-          100: '#F4F5FA',
+          400: 'var(--haze-400)',
+          300: 'var(--haze-300)',
+          200: 'var(--haze-200)',
+          100: 'var(--haze-100)',
+        },
+        canvas: {
+          track: 'var(--canvas-track)',
         },
         orbit: {
           violet: '#7C6CF6',
@@ -32,10 +36,10 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 40px -8px rgba(124,108,246,0.45)',
-        glowTeal: '0 0 40px -8px rgba(45,216,196,0.45)',
-        glowAmber: '0 0 40px -8px rgba(251,191,90,0.45)',
-        card: '0 8px 30px -12px rgba(0,0,0,0.5)',
+        glow: 'var(--glow-shadow)',
+        glowTeal: '0 0 36px -10px rgba(45,216,196,0.4)',
+        glowAmber: '0 0 36px -10px rgba(233,162,45,0.4)',
+        card: 'var(--card-shadow)',
       },
       backgroundImage: {
         'aurora-mesh':

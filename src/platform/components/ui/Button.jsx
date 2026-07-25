@@ -5,7 +5,7 @@ const variants = {
   primary:
     'bg-gradient-to-r from-orbit-violet to-orbit-violetSoft text-white shadow-glow hover:brightness-110',
   ghost: 'glass text-haze-100 hover:border-white/20',
-  teal: 'bg-gradient-to-r from-orbit-teal to-emerald-300 text-ink-950 shadow-glowTeal hover:brightness-105',
+  teal: 'bg-gradient-to-r from-orbit-teal to-emerald-300 text-[#0B0C14] shadow-glowTeal hover:brightness-105',
   subtle: 'bg-white/5 text-haze-100 hover:bg-white/10 border border-white/10',
 };
 

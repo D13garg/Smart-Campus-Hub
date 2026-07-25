@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Moon, Sun, Eye, Keyboard, Palette } from 'lucide-react';
 import PageHeader from '@platform/components/ui/PageHeader.jsx';
 import GlassCard from '@platform/components/ui/GlassCard.jsx';
 import { Badge } from '@platform/components/ui/Badge.jsx';
 import useTheme from '@platform/hooks/useTheme.js';
+import usePersistedState from '@platform/hooks/usePersistedState.js';
 
 const accents = [
   { id: 'violet', color: '#7C6CF6' },
@@ -22,9 +23,9 @@ const shortcuts = [
 
 export default function Settings() {
   const { theme, toggle } = useTheme();
-  const [accent, setAccent] = useState('violet');
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
+  const [accent, setAccent] = usePersistedState('orbit_accent_color', 'violet');
+  const [reducedMotion, setReducedMotion] = usePersistedState('orbit_reduced_motion', false);
+  const [highContrast, setHighContrast] = usePersistedState('orbit_high_contrast', false);
 
   return (
     <div>

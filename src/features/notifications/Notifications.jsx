@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap, BookOpen, CalendarCheck, UtensilsCrossed, Bell, CheckCheck } from 'lucide-react';
 import PageHeader from '@platform/components/ui/PageHeader.jsx';
 import GlassCard from '@platform/components/ui/GlassCard.jsx';
 import Button from '@platform/components/ui/Button.jsx';
 import { notifications as seed } from '@platform/data/campusData.js';
+import usePersistedState from '@platform/hooks/usePersistedState.js';
 
 const iconMap = {
   grade: { icon: GraduationCap, color: 'text-orbit-violetSoft', bg: 'bg-orbit-violet/12' },
@@ -15,11 +16,15 @@ const iconMap = {
 };
 
 export default function Notifications() {
-  const [items, setItems] = useState(seed);
+  // Persist only which ids have been read, layered onto the live mock data —
+  // so a future change to the seed data (e.g. a new notification) still shows
+  // up correctly instead of being masked by a stale stored copy of `items`.
+  const [readIds, setReadIds] = usePersistedState('orbit_notifications_read_ids', []);
+  const items = seed.map((n) => (readIds.includes(n.id) ? { ...n, unread: false } : n));
   const unreadCount = items.filter((n) => n.unread).length;
 
-  const markAllRead = () => setItems((its) => its.map((n) => ({ ...n, unread: false })));
-  const markRead = (id) => setItems((its) => its.map((n) => (n.id === id ? { ...n, unread: false } : n)));
+  const markAllRead = () => setReadIds(seed.map((n) => n.id));
+  const markRead = (id) => setReadIds((ids) => (ids.includes(id) ? ids : [...ids, id]));
 
   return (
     <div>

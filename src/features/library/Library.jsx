@@ -6,10 +6,11 @@ import GlassCard from '@platform/components/ui/GlassCard.jsx';
 import Button from '@platform/components/ui/Button.jsx';
 import { Badge } from '@platform/components/ui/Badge.jsx';
 import { libraryBooks, libraryRecommendations } from '@platform/data/campusData.js';
+import usePersistedState from '@platform/hooks/usePersistedState.js';
 
 export default function Library() {
   const [tab, setTab] = useState('issued');
-  const [renewed, setRenewed] = useState({});
+  const [renewed, setRenewed] = usePersistedState('orbit_library_renewed', {});
 
   const filtered = libraryBooks.filter((b) => (tab === 'issued' ? b.status === 'issued' : b.status === 'returned'));
 

@@ -6,12 +6,13 @@ import GlassCard from '@platform/components/ui/GlassCard.jsx';
 import Button from '@platform/components/ui/Button.jsx';
 import { Badge } from '@platform/components/ui/Badge.jsx';
 import { canteenMenu, canteenOrders } from '@platform/data/campusData.js';
+import usePersistedState from '@platform/hooks/usePersistedState.js';
 
 const categories = ['All', ...new Set(canteenMenu.map((m) => m.category))];
 
 export default function Canteen() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = usePersistedState('orbit_canteen_cart', {});
   const [placed, setPlaced] = useState(false);
 
   const items = useMemo(
